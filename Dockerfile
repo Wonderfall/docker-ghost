@@ -13,20 +13,27 @@ ENV GHOST_NODE_VERSION_CHECK=false \
 
 WORKDIR /ghost
 
-RUN apk -U --no-cache add \
+RUN apk -U upgrade \
+ && apk add -t build-dependencies \
+    python-dev \
+    build-base \
+ && apk add \
     bash \
     ca-certificates \
     grep \
     libressl \
-    nodejs-current \
-    nodejs-current-npm \
+    nodejs \
+    nodejs-npm \
+    python \
     s6 \
     su-exec \
     vim \
  && wget -q https://github.com/TryGhost/Ghost/releases/download/${VERSION}/Ghost-${VERSION}.zip -P /tmp \
  && unzip -q /tmp/Ghost-${VERSION}.zip -d /ghost \
  && npm install --production \
- && mv content/themes/casper casper
+ && mv content/themes/casper casper \
+ && apk del build-dependencies \
+ && rm -rf /tmp/* /var/cache/apk/*
 
 COPY rootfs /
 
