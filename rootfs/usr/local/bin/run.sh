@@ -27,15 +27,6 @@ echo "> Applying preferences..."
 
 sed -i -e "s|https://my-ghost-blog.com|${ADDRESS}|g" /ghost/content/ghost.conf
 
-if [ "$ENABLE_ISSO" == "True" ] && ! grep -q 'isso' /ghost/content/themes/casper/post.hbs; then
-    cd /usr/local/etc
-    sed -i -e "/\/author/r isso.conf" /ghost/content/themes/casper/post.hbs
-    sed -i -e '/isso-thread/{n;d}' /ghost/content/themes/casper/post.hbs
-    sed -i -e "s/<HOST>/$ISSO_HOST/g" \
-           -e "s/<AVATAR>/$ISSO_AVATAR/g" \
-           -e "s/<VOTE>/$ISSO_VOTE/g" /ghost/content/themes/casper/post.hbs
-fi
-
 echo "> Updating permissions..."
 chown -R ${UID}:${GID} /ghost /etc/s6.d
 

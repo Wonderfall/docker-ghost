@@ -1,15 +1,11 @@
 FROM alpine:3.8
 
-ARG VERSION=2.1.2
+ARG VERSION=2.2.0
 
 ENV GHOST_NODE_VERSION_CHECK=false \
     NODE_ENV=production \
     GID=991 UID=991 \
-    ADDRESS=https://my-ghost-blog.com \
-    ENABLE_ISSO=False \
-    ISSO_HOST=isso.domain.tld \
-    ISSO_AVATAR=false \
-    ISSO_VOTE=false
+    ADDRESS=https://my-ghost-blog.com
 
 WORKDIR /ghost
 
